@@ -65,4 +65,4 @@ events_urls.values.flatten.uniq.each do |event_url|
 end
 
 p stats
-File.write('stats.json', stats.to_json)
+File.write('stats.json', JSON.pretty_generate(stats))
