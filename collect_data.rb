@@ -52,15 +52,11 @@ events_urls.values.flatten.uniq.each do |event_url|
   sections_with_fails.each do |(gender, section_with_fails)|
     section = doc.css(section_with_fails)
     tables = section.css('h2:contains("Clean&Jerk") + table, h2:contains("Snatch") + table')
-    members_count = tables.css('tbody tr').length / 2.0
-    fails_count   = tables.css('td strike').length
-
-    willpower = members_count / fails_count.to_f if fails_count != 0
 
     stat = stats[event_url][gender] = {}
-    stat[:members_count] = members_count
-    stat[:fails_count] = fails_count
-    stat[:willpower] = willpower
+    stat[:members_count] = tables.css('tbody tr').length
+    stat[:fails_count] =   tables.css('td strike').length
+    stat[:members_with_fails_count] = tables.css('tr:has(td strike)').length
   end
 end
 
